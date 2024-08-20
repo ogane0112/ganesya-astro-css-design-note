@@ -314,26 +314,34 @@ const descriptions = await Promise.all(
   const hamburgerMenu = document.getElementById('hamburger-menu');
   const menu = document.getElementById('menu');
 
-  hamburgerMenu.addEventListener('click', () => {
-    menu.classList.toggle('open');
-    hamburgerMenu.classList.toggle('open');
-  });
-
-  // メニュー項目がクリックされたときにメニューを閉じる
-  document.querySelectorAll('#menu a').forEach(link => {
-    link.addEventListener('click', () => {
-      menu.classList.remove('open');
-      hamburgerMenu.classList.remove('open');
+  if (hamburgerMenu && menu) {
+    hamburgerMenu.addEventListener('click', () => {
+      menu.classList.toggle('open');
+      hamburgerMenu.classList.toggle('open');
     });
-  });
+
+    // メニュー項目がクリックされたときにメニューを閉じる
+    document.querySelectorAll('#menu a').forEach(link => {
+      link.addEventListener('click', () => {
+        menu.classList.remove('open');
+        hamburgerMenu.classList.remove('open');
+      });
+    });
+  }
 
   // スムーズスクロール
   document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
+    anchor.addEventListener('click', function(this: HTMLAnchorElement, e: Event) {
       e.preventDefault();
-      document.querySelector(this.getAttribute('href')).scrollIntoView({
-        behavior: 'smooth'
-      });
+      const href = this.getAttribute('href');
+      if (href) {
+        const targetElement = document.querySelector(href);
+        if (targetElement) {
+          targetElement.scrollIntoView({
+            behavior: 'smooth'
+          });
+        }
+      }
     });
   });
 </script>
