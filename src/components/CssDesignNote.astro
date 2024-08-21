@@ -55,6 +55,116 @@ const cssExamples = [
   <p class="card-content">これはカードの内容です。ここに説明文やその他の情報が入ります。</p>
 </div>
     `
+  },
+  {
+    title: "アニメーションボタン",
+    descriptionSlug: "animatedbutton",
+    code: `
+.animated-button {
+  display: inline-block;
+  padding: 10px 20px;
+  font-size: 16px;
+  color: white;
+  background-color: #e74c3c;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.animated-button::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: width 0.3s ease, height 0.3s ease;
+}
+
+.animated-button:hover {
+  background-color: #c0392b;
+}
+
+.animated-button:hover::after {
+  width: 200px;
+  height: 200px;
+}
+    `,
+    html: '<button class="animated-button">アニメーションボタン</button>'
+  },
+  {
+    title: "通知デザイン",
+    descriptionSlug: "notion",
+    html: `
+<div class="cssdesignbook-body">
+  <div class="cssdesignbook-container">
+    <div class="cssdesignbook-notification-icon" data-count="3"></div>
+    <button class="cssdesignbook-button">通知を確認</button>
+  </div>
+</div>
+    `,
+    code: `
+.cssdesignbook-body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100px;
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
+.cssdesignbook-container {
+  text-align: center;
+}
+.cssdesignbook-notification-icon {
+  position: relative;
+  width: 24px;
+  height: 24px;
+  background-color: #4A90E2;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+.cssdesignbook-notification-icon::before {
+  content: "\\1F514";
+  font-size: 16px;
+  color: white;
+}
+.cssdesignbook-notification-icon::after {
+  content: attr(data-count);
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background-color: #FF4136;
+  color: white;
+  border-radius: 50%;
+  padding: 2px 5px;
+  font-size: 12px;
+}
+.cssdesignbook-notification-icon[data-count="0"]::after {
+  display: none;
+}
+.cssdesignbook-button {
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+.cssdesignbook-button:hover {
+  background-color: #45a049;
+}
+    `
   }
 ];
 
@@ -124,6 +234,8 @@ const descriptions = await Promise.all(
     max-width: 1200px;
     margin: 0 auto;
     padding: 20px;
+    width: 100%;
+    box-sizing: border-box;
   }
 
   header {
@@ -216,6 +328,7 @@ const descriptions = await Promise.all(
   .code {
     background-color: #f8f8f8;
     border-bottom: 1px solid #e0e0e0;
+    overflow-x: auto;
   }
 
   pre {
@@ -237,10 +350,13 @@ const descriptions = await Promise.all(
 
   .result-content {
     margin-top: 20px;
+    overflow-x: auto;
+    max-width: 100%;
   }
 
   .result-content > div {
     all: revert;
+    max-width: 100%;
   }
 
   @media (min-width: 768px) {
@@ -276,6 +392,10 @@ const descriptions = await Promise.all(
   }
 
   @media (max-width: 767px) {
+    .css-design-showcase-container {
+      padding: 10px;
+    }
+
     #hamburger-menu {
       display: block;
     }
@@ -306,6 +426,10 @@ const descriptions = await Promise.all(
 
     #menu a {
       font-size: 18px;
+    }
+
+    .code, .result {
+      padding: 10px;
     }
   }
 </style>
